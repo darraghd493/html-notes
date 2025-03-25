@@ -52,11 +52,8 @@ const createNote = () => {
     loadNotesList();
 }
 
-const deleteNote = (elem) => {
-    const note = elem.parentNode.parentNode; // buttom > div > div
-    const title = note.querySelector('#note-title').innerText;
-    const content = note.querySelector('#note-content').innerText;
-    notes = notes.filter(n => n.title !== title || n.content !== content);
+const deleteNote = (noteIndex) => {
+    notes.splice(noteIndex, 1);
     saveNotes();
     loadNotesList();
 }
@@ -64,12 +61,15 @@ const deleteNote = (elem) => {
 const loadNotesList = () => {
     const notesList = document.getElementById('notes-list');
     notesList.innerHTML = '';
-    notes.forEach(note => {
+
+    for (let i = 0; i < notes.length; i++) {
+        const note = notes[i];
         const newNote = template.cloneNode(true);
         newNote.querySelector('#note-title').innerText = note.title;
         newNote.querySelector('#note-content').innerText = note.content;
+        newNote.querySelector('#delete-note').onclick = () => deleteNote(i);
         notesList.appendChild(newNote);
-    });
+    }
 };
 
 window.onload = () => {
