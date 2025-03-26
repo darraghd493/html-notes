@@ -52,6 +52,14 @@ const createNote = () => {
     loadNotesList();
 }
 
+const searchNotes = (elem) => {
+    const text = elem.value;
+    const notesList = document.getElementById('notes-list');
+    notesList.childNodes.forEach((note) => {
+        note.style.display = note.querySelector('#note-title').innerText.startsWith(text) ? 'block' : 'none';
+    })
+}
+
 const deleteNote = (noteIndex) => {
     notes.splice(noteIndex, 1);
     saveNotes();
